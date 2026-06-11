@@ -6,31 +6,31 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 A meta-framework for distilling the core capabilities of exceptional thinkers (heroes) into reusable, shareable GitHub repositories. Each distilled hero becomes a standalone repo containing behavioral guidelines, actionable principles, and a loadable AI skill — so the hero's thinking patterns can be invoked on demand.
 
-**Global skill**: `distill-hero` is installed at `~/.claude/skills/distill-hero/` with bundled TEMPLATE. Invoke via `/distill-hero` or by saying "蒸馏XX".
+**Distillation skill**: `.claude/skills/distill-hero/` with bundled `TEMPLATE/`. Invoke via `/distill-hero` or by saying "蒸馏XX".
 
-Reference implementations in this repo: `andrej-karpathy-skills/` and `musk-decision-interrogation/`. Distilled heroes: `heros/陈平/`, `heros/张良/`.
+Reference implementations: `andrej-karpathy-skills/` and `musk-decision-interrogation/`. Distilled heroes: `heros/陈平/`, `heros/张良/`.
 
 ## Repository Architecture
 
 ```
 heros-distill/                    # This repo — the distillery
-  CLAUDE.md                       # You are here
-  TEMPLATE/                       # Starter template for new hero repos
-    info.md                       # Deep analysis of hero's thinking
-    principles.md                 # Actionable principles (history + modern use)
-    CONTEXT.md                    # Domain glossary of hero's concepts
-    EXAMPLES.md                   # Concrete before/after examples
-    CLAUDE.md                     # Behavioral guidelines for AI embodiment
-    README.md + README.zh.md      # Public documentation
-    skills/<name>/SKILL.md        # Loadable AI skill
-    .cursor/rules/<name>.mdc      # Cursor IDE rule
-    .claude-plugin/               # Plugin packaging (plugin.json + marketplace.json)
+  CLAUDE.md                       # Project guidance
+  README.md + README.zh.md        # Public documentation
+  .claude/skills/distill-hero/    # Distillation skill (loadable)
+    SKILL.md                      # Pipeline + quality standards
+    TEMPLATE/                     # Starter kit for new hero repos
+      info.md, principles.md, CONTEXT.md, EXAMPLES.md
+      CLAUDE.md, README.md, README.zh.md
+      skills/<name>/SKILL.md
+      .cursor/rules/<name>.mdc
+      .claude-plugin/
   heros/                          # Distilled heroes (each → independent gh repo)
     <name>/
-      info.md
-      principles.md
-  andrej-karpathy-skills/         # Reference: principles distilled into behavioral guidelines
-  musk-decision-interrogation/    # Reference: thinking framework distilled into prompt structure
+      info.md, principles.md, CONTEXT.md, CLAUDE.md
+      EXAMPLES.md, README.md, README.zh.md
+      skills/, .cursor/rules/, .claude-plugin/
+  andrej-karpathy-skills/         # Reference: behavioral distillation
+  musk-decision-interrogation/    # Reference: framework distillation
 ```
 
 ## Distillation Workflow
