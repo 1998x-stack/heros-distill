@@ -6,7 +6,9 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 A meta-framework for distilling the core capabilities of exceptional thinkers (heroes) into reusable, shareable GitHub repositories. Each distilled hero becomes a standalone repo containing behavioral guidelines, actionable principles, and a loadable AI skill — so the hero's thinking patterns can be invoked on demand.
 
-Reference implementations in this repo: `andrej-karpathy-skills/` and `musk-decision-interrogation/`. First distilled hero: `heros/陈平/`.
+**Global skill**: `distill-hero` is installed at `~/.claude/skills/distill-hero/` with bundled TEMPLATE. Invoke via `/distill-hero` or by saying "蒸馏XX".
+
+Reference implementations in this repo: `andrej-karpathy-skills/` and `musk-decision-interrogation/`. Distilled heroes: `heros/陈平/`, `heros/张良/`.
 
 ## Repository Architecture
 
