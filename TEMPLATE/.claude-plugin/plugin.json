@@ -1,0 +1,14 @@
+{
+  "name": "hero-name",
+  "version": "1.0.0",
+  "description": "<one-line description>",
+  "author": "<your-name>",
+  "license": "MIT",
+  "skills": [
+    {
+      "name": "hero-name",
+      "description": "<one-line description>",
+      "path": "skills/hero-name/SKILL.md"
+    }
+  ]
+}

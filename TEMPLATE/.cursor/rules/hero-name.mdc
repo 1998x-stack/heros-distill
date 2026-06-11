@@ -1,0 +1,12 @@
+---
+description: <one-line description>
+alwaysApply: true
+---
+
+# HERO_NAME
+
+<!-- Sync from CLAUDE.md — same principles, same structure.
+     The .mdc file is for Cursor IDE; CLAUDE.md is for Claude Code; SKILL.md is the installable skill.
+     All three must stay in sync when principles change. -->
+
+<content synced from CLAUDE.md>

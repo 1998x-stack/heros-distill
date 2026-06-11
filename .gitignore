@@ -1,0 +1,15 @@
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Local settings
+.claude/settings.local.json
+.claude/worktrees/
+
+# Reference repos (independent repos with their own .git)
+andrej-karpathy-skills/
+musk-decision-interrogation/
+
+# Distilled hero repos (each is its own independent repo)
+heros/
