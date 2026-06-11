@@ -1,6 +1,12 @@
 ---
 name: distill-hero
-description: Distill any exceptional thinker into a complete, reusable GitHub repository with AI-loadable skills. Use whenever the user mentions distilling a hero, extracting someone's thinking patterns, building a hero repo, or wanting to "learn from X's approach." Handles the full pipeline: research → write info.md + principles.md → build full repo from TEMPLATE → grill iteratively → publish via gh. Triggers on: "蒸馏XX", "提取XX的能力/思维", "学习XX的思维/格局", "构建XX仓库", "distill X", "extract X's thinking", "what would X do?", "how did X think about Y?". If a user names a historical figure, thinker, strategist, or leader and wants to understand their methodology, this skill should activate.
+description: >
+  Distill any exceptional thinker into a complete, reusable GitHub repository with AI-loadable skills.
+  Use whenever the user mentions distilling a hero, extracting someone's thinking patterns, building a hero repo,
+  or wanting to learn from a specific thinker's approach. Handles the full pipeline: research, write info.md and principles.md,
+  build full repo from TEMPLATE, grill iteratively, publish via gh. Triggers on Chinese phrases like 蒸馏XX, 提取XX的能力,
+  学习XX的思维, 构建XX仓库, and English phrases like distill X, extract X's thinking, what would X do, how did X think about Y.
+  If a user names a historical figure, thinker, strategist, or leader and wants to understand their methodology, activate.
 ---
 
 # Hero Distillation
