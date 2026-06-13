@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英雄蒸馏 — A Gallery of Distilled Minds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0d0b;
+  --parchment: #e8e0d0;
+  --parchment-dim: #9a9488;
+  --amber: #c9953d;
+  --amber-bright: #e8b84b;
+  --amber-deep: #8b6914;
+  --surface: #171612;
+  --surface-alt: #1e1d18;
+  --border: #2a2820;
+  --red-seal: #b5343a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  background: var(--ink);
+  color: var(--parchment);
+  font-family: 'Noto Serif', 'Noto Serif SC', serif;
+  font-size: 17px;
+  line-height: 1.7;
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Navigation ── */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, var(--ink) 60%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-brand {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  color: var(--parchment);
+}
+
+.nav-brand span {
+  color: var(--amber);
+}
+
+.nav-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--parchment-dim);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+.nav-link:hover {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+/* ── Hero Section ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201,149,61,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s ease-out forwards;
+}
+
+.hero-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  color: var(--parchment);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s ease-out forwards;
+}
+
+.hero-title .distill {
+  color: var(--amber);
+  position: relative;
+  display: inline-block;
+}
+
+.hero-title .distill::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--amber-bright), transparent);
+  opacity: 0.5;
+}
+
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-style: italic;
+  color: var(--parchment-dim);
+  max-width: 580px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s ease-out forwards;
+}
+
+.hero-subtitle strong {
+  color: var(--parchment);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Drip divider */
+.drip-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s ease-out forwards;
+}
+
+.drip {
+  width: 2px;
+  background: var(--amber);
+  opacity: 0.3;
+}
+
+.drip:nth-child(1) { height: 28px; }
+.drip:nth-child(2) { height: 18px; opacity: 0.2; }
+.drip:nth-child(3) { height: 8px; opacity: 0.1; }
+
+/* Hero drops - distillation metaphor */
+.drops {
+  position: absolute;
+  bottom: 80px;
+  right: 12%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeUp 1s 1.2s ease-out forwards;
+}
+
+.drop {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--amber);
+  opacity: 0;
+  animation: dripFloat 3s ease-in-out infinite;
+}
+
+.drop:nth-child(1) { animation-delay: 0s; width: 6px; height: 6px; opacity: 0.4; }
+.drop:nth-child(2) { animation-delay: 1s; width: 10px; height: 10px; opacity: 0.55; }
+.drop:nth-child(3) { animation-delay: 2s; width: 14px; height: 14px; opacity: 0.7; }
+
+@keyframes dripFloat {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(-12px); opacity: 0.8; }
+}
+
+/* ── Pipeline Section ── */
+.pipeline-section {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--parchment);
+  letter-spacing: 0.04em;
+}
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.pipeline::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), var(--amber), var(--border), transparent);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  padding: 0 0.5rem;
+}
+
+.step-num {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--amber);
+  margin-bottom: 1rem;
+  transition: all 0.4s;
+}
+
+.pipeline-step:hover .step-num {
+  background: var(--amber-deep);
+  border-color: var(--amber);
+  color: var(--ink);
+  box-shadow: 0 0 24px rgba(201,149,61,0.2);
+}
+
+.step-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--parchment);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.03em;
+}
+
+.step-desc {
+  font-size: 0.75rem;
+  color: var(--parchment-dim);
+  line-height: 1.5;
+}
+
+/* ── Heroes Gallery ── */
+.gallery-section {
+  padding: 3rem 2rem 6rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 2rem 1.75rem;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.hero-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-card:hover {
+  border-color: var(--amber);
+  background: var(--surface-alt);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(201,149,61,0.1);
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.75rem;
+  right: 1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,149,61,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.hero-card:hover::before {
+  opacity: 1;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.hero-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--parchment);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.hero-name-eng {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--parchment-dim);
+  letter-spacing: 0.02em;
+  margin-top: 0.15rem;
+}
+
+.card-domain {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  white-space: nowrap;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid rgba(201,149,61,0.2);
+  border-radius: 1px;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+
+.card-insight {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--parchment-dim);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-principles {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--parchment-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.card-arrow svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--parchment-dim);
+  transition: all 0.3s;
+}
+
+.hero-card:hover .card-arrow {
+  border-color: var(--amber);
+  background: var(--amber-deep);
+}
+
+.hero-card:hover .card-arrow svg {
+  stroke: var(--amber-bright);
+  transform: translateX(2px);
+}
+
+/* ── Special: Featured card (spans wider on large screens) ── */
+.hero-card.featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2.5rem 2rem;
+}
+
+.hero-card.featured .hero-name {
+  font-size: 2.2rem;
+}
+
+.hero-card.featured .card-insight {
+  font-size: 1.15rem;
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-card.featured {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.75rem;
+  }
+  .hero-card.featured .hero-name { font-size: 1.6rem; }
+  .pipeline {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .pipeline::before { display: none; }
+  .heroes-grid {
+    grid-template-columns: 1fr;
+  }
+  .drops { display: none; }
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.footer-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--parchment-dim);
+  letter-spacing: 0.06em;
+}
+
+.footer-text a {
+  color: var(--amber);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.footer-text a:hover {
+  border-color: var(--amber);
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered card reveals */
+.hero-card:nth-child(1) { transition-delay: 0s; }
+.hero-card:nth-child(2) { transition-delay: 0.08s; }
+.hero-card:nth-child(3) { transition-delay: 0.16s; }
+.hero-card:nth-child(4) { transition-delay: 0.24s; }
+.hero-card:nth-child(5) { transition-delay: 0.32s; }
+.hero-card:nth-child(6) { transition-delay: 0.4s; }
+.hero-card:nth-child(7) { transition-delay: 0.48s; }
+
+/* Scroll reveal */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--amber-deep);
+  color: var(--parchment);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span>蒸</span>馏 英雄</div>
+  <a class="nav-link" href="https://github.com/1998x-stack/heros-distill">GitHub →</a>
+</nav>
+
+<main>
+
+<section class="hero">
+  <p class="hero-eyebrow">A Meta-Framework · 元框架</p>
+  <h1 class="hero-title">
+    英雄<span class="distill">蒸馏</span>
+  </h1>
+  <p class="hero-subtitle">
+    Distilling the <strong>thinking machinery</strong> of exceptional minds —<br>
+    from ancient strategists to modern operators —<br>
+    into <strong>reusable, AI-loadable systems</strong>.
+  </p>
+  <div class="drip-divider">
+    <div class="drip"></div>
+    <div class="drip"></div>
+    <div class="drip"></div>
+  </div>
+
+  <div class="drops" aria-hidden="true">
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+  </div>
+</section>
+
+<section class="pipeline-section">
+  <div class="section-header">
+    <p class="section-label">The Pipeline</p>
+    <h2 class="section-title">五步蒸馏法</h2>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipeline-step reveal">
+      <div class="step-num">1</div>
+      <div class="step-title">Research</div>
+      <div class="step-desc">Primary sources, critical decisions, first principles</div>
+    </div>
+    <div class="pipeline-step reveal">
+      <div class="step-num">2</div>
+      <div class="step-title">Write Core</div>
+      <div class="step-desc">Deep analysis → actionable principles with dual-use apps</div>
+    </div>
+    <div class="pipeline-step reveal">
+      <div class="step-num">3</div>
+      <div class="step-title">Build Repo</div>
+      <div class="step-desc">Pipeline discovery, CLAUDE.md, SKILL.md, Cursor rules</div>
+    </div>
+    <div class="pipeline-step reveal">
+      <div class="step-num">4</div>
+      <div class="step-title">Grill</div>
+      <div class="step-desc">6 audits: terminology, structure, sync, completeness, quality</div>
+    </div>
+    <div class="pipeline-step reveal">
+      <div class="step-num">5</div>
+      <div class="step-title">Publish</div>
+      <div class="step-desc">GitHub repo, bilingual README, marketplace-ready</div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section">
+  <div class="section-header">
+    <p class="section-label">The Gallery</p>
+    <h2 class="section-title">已蒸馏的思维系统</h2>
+  </div>
+
+  <div class="heroes-grid">
+
+    <!-- 张良 - Featured -->
+    <a href="https://github.com/1998x-stack/zhangliang-grand-strategy" class="hero-card featured">
+      <div>
+        <div class="card-header" style="margin-bottom:1rem;">
+          <div class="hero-name">
+            张良
+            <span class="hero-name-eng">Zhang Liang · c. 250–186 BC</span>
+          </div>
+          <div class="card-domain">Grand Strategy</div>
+        </div>
+        <p class="card-insight">
+          "Question the board before optimizing a move. Deconstruct to first principles before accepting templates. Wait for decaying momentum before striking. Always know the endgame."
+        </p>
+        <div class="card-meta" style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);">
+          <span class="card-principles">10 principles · 四阶段格局框架</span>
+          <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem;color:var(--parchment-dim);line-height:1.6;">
+        <p style="margin-bottom:0.5rem;"><strong style="color:var(--parchment);">核心洞察：</strong></p>
+        势 > 力。最好的谋略不是创造出新的力量——是识别已经存在、方向与你部分一致的力量，通过重新编排它们的关系，形成一个对手无法同时应对的协同系统。下邑画策、谏止分封、劝都关中——每一次都是以结构的思维，让正确的结果自己浮现。
+      </div>
+    </a>
+
+    <!-- 陈平 -->
+    <a href="https://github.com/1998x-stack/chenping-human-strategy" class="hero-card">
+      <div class="card-header">
+        <div class="hero-name">
+          陈平
+          <span class="hero-name-eng">Chen Ping · c. 250–179 BC</span>
+        </div>
+        <div class="card-domain">Human Strategy</div>
+      </div>
+      <p class="card-insight">
+        "All behavior is interest-driven. Every weakness is leverage. The best move makes your opponent choose your preferred outcome — voluntarily."
+      </p>
+      <div class="card-meta">
+        <span class="card-principles">10 principles · 五阶决策框架</span>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+
+    <!-- 林彪 -->
+    <a href="https://github.com/1998x-stack/linbiao-operational-command" class="hero-card">
+      <div class="card-header">
+        <div class="hero-name">
+          林彪
+          <span class="hero-name-eng">Lin Biao · 1907–1971</span>
+        </div>
+        <div class="card-domain">Operational Command</div>
+      </div>
+      <p class="card-insight">
+        "Gather first-hand intelligence relentlessly. War-game exhaustively. Act decisively at 70–80% certainty. Close the gap through team alignment and execution culture."
+      </p>
+      <div class="card-meta">
+        <span class="card-principles">9 principles · 四阶段指挥流程</span>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+
+    <!-- 刘强东 -->
+    <a href="https://github.com/1998x-stack/liuqiangdong-operational-excellence" class="hero-card">
+      <div class="card-header">
+        <div class="hero-name">
+          刘强东
+          <span class="hero-name-eng">Liu Qiangdong · b. 1974</span>
+        </div>
+        <div class="card-domain">Operational Excellence</div>
+      </div>
+      <p class="card-insight">
+        "Strip problems to irreducible elements: UX, cost, efficiency. Build foundational stability over highlights. Manage through systems, not relationships. Stay close enough to feel reality."
+      </p>
+      <div class="card-meta">
+        <span class="card-principles">10 principles · 正道成功框架</span>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+
+    <!-- 刘邦 -->
+    <a href="https://github.com/1998x-stack/liubang-talent-orchestration" class="hero-card">
+      <div class="card-header">
+        <div class="hero-name">
+          刘邦
+          <span class="hero-name-eng">Liu Bang · 256–195 BC</span>
+        </div>
+        <div class="card-domain">Talent Orchestration</div>
+      </div>
+      <p class="card-insight">
+        "Don't ask 'how do I become stronger?' Ask: who is already strong at this, and how do I make them want to win for me?"
+      </p>
+      <div class="card-meta">
+        <span class="card-principles">10 principles · 借力思维体系</span>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+
+    <!-- 成事七大境界 -->
+    <a href="https://github.com/1998x-stack/chengshi-seven-levels" class="hero-card">
+      <div class="card-header">
+        <div class="hero-name">
+          成事七大境界
+          <span class="hero-name-eng">Chengshi · Energy Dimensions</span>
+        </div>
+        <div class="card-domain">Personal Mastery</div>
+      </div>
+      <p class="card-insight">
+        "Diagnose which energy level the problem requires. Break through ceilings by transforming your mental model — not just your effort. Work toward defining problems and creating games."
+      </p>
+      <div class="card-meta">
+        <span class="card-principles">7 levels · 能量跃迁框架</span>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+
+    <!-- Buffett -->
+    <a href="https://github.com/1998x-stack/buffett-value-investing" class="hero-card">
+      <div class="card-header">
+        <div class="hero-name">
+          Warren Buffett
+          <span class="hero-name-eng">Buffett · b. 1930</span>
+        </div>
+        <div class="card-domain">Value Investing</div>
+      </div>
+      <p class="card-insight">
+        "Define your circle of competence. Value businesses by owner earnings and moat durability. Exploit Mr. Market's mood swings. Deploy capital with extreme selectivity."
+      </p>
+      <div class="card-meta">
+        <span class="card-principles">8 principles · 价值投资框架</span>
+        <div class="card-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="footer-text">
+    <a href="https://github.com/1998x-stack/heros-distill">heros-distill</a>
+    &nbsp;·&nbsp; MIT
+    &nbsp;·&nbsp; Built with the <a href="https://github.com/1998x-stack/heros-distill/blob/main/.claude/skills/distill-hero/SKILL.md">distill-hero skill</a>
+  </p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.hero-card').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

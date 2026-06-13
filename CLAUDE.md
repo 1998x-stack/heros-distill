@@ -61,6 +61,8 @@ When asked to distill a hero, follow these phases in order:
 |------|------|--------|
 | 陈平 | [chenping-human-strategy](https://github.com/1998x-stack/chenping-human-strategy) | Human nature / strategic psychology |
 | 张良 | [zhangliang-grand-strategy](https://github.com/1998x-stack/zhangliang-grand-strategy) | Grand strategy / structural thinking |
+| 成事七大境界 | [chengshi-seven-levels](https://github.com/1998x-stack/chengshi-seven-levels) | Energy-dimension framework for accomplishment |
+| 刘强东 | [liuqiangdong-operational-excellence](https://github.com/1998x-stack/liuqiangdong-operational-excellence) | Operational excellence / foundational stability |
 
 ## Reference Implementations
 
